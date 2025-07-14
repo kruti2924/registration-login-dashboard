@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f5f9;
+    overflow: hidden; /* Prevent scroll */
+  }
+
+  .form-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .form-box {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+  }
+
+  h2 {
+    text-align: center;
+    margin: 0 0 20px;
+    font-size: 22px;
+    color: #333;
+  }
+
+  label {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 5px;
+    margin-top: 10px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .error {
+    color: red;
+    font-size: 13px;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .success {
+    color: green;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    background-color: #0072ff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    border-radius: 6px;
+    margin-top: 25px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #005ecc;
+  }
+  .link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #0072ff;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+    /* Animate error fields */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.input-error {
+  border: 1px solid #e63946 !important;
+  animation: shake 0.3s ease;
+}
+
+</style>
+
+
+
+
+</head>
+<body>
+    
+    <div class="form-container">
+    <div class="form-box">
+    <h2>Registration Form</h2>
+    <form id = "registrationform" onsubmit="return validateForm()">
+
+        <!--full name-->
+        <label>Full Name:
+            <input type ="text" id = "fullname" name="fullname" required>
+        </label>
+        <span class="error" id="fullNameError"></span>
+
+        <!--email-->
+        <label>Email:
+            <input type ="email" id = "email" name="email" required>
+        </label>
+        <span class="error" id="emailError"></span>
+
+        <!--password-->
+        <label>Password:
+            <input type ="password" id = "password" name="password" required>
+        </label>
+        <span class="error" id="passwordError"></span>
+
+        <!--confirm password-->
+        <label>Confirm password:
+            <input type ="password" id = "confirmpassword" name="confirmpassword" required>
+        </label>
+        <span class="error" id="confirmPasswordError"></span>
+
+        <!--phone number-->
+        <label>Phone Number:
+            <input type ="text" id = "phonenumber" name="phonenumber" required>
+        </label>
+        <span class="error" id="phoneNumberError"></span>
+
+        <!--gender-->
+        <label>Gender:
+            <input type ="radio" name="gender" value="Male" required>Male
+            <input type ="radio" name="gender" value="Female" required>Female
+        </label>
+        <span class="error" id="genderError"></span>
+
+        <!--dob-->
+        <label>Date of Birth:
+            <input type ="date" id="dob" name="dob" required>
+        </label>
+        <span class="error" id="dobError"></span>
+
+        <!--address-->
+        <label>Address:
+            <textarea id="address" name="address" required minlength="10"></textarea>
+        </label>
+        <span class="error" id="addressError"></span>
+
+        <!--city-->
+        <label>City:
+            <select id="city" name="city" required>
+                <option value="">Select City</option>
+                <option>Ahmedabad</option>
+                <option>Bangalore</option>
+                <option>Delhi</option>
+                <option>Hydrabad</option>
+                <option>Mumbai</option>
+                <option>Rajkot</option>
+                <option>Surat</option>
+                <option>Vadodara</option>
+            </select>
+        </label>
+        <span class="error" id="cityError"></span>
+
+        <!--skills-->
+        <label>Skills:
+            <input type="checkbox" name="skills" value="HTML">HTML
+            <input type="checkbox" name="skills" value="CSS">CSS
+            <input type="checkbox" name="skills" value="JavaScript">JavaScript
+        </label>
+        <span class="error" id="skillsError"></span>
+
+        <!-- Profile Picture -->
+<label>Profile Picture:
+  <input type="file" id="profilePic" accept="image/*">
+</label>
+<span class="error" id="profilePicError"></span>
+
+        <!--terms-->
+        <label>
+            <input type="checkbox" id="terms" name="terms" required>I accept the Terms and Conditions
+        </label>
+        <span class="error" id="termsError"></span>
+
+        <br><br>
+        <button type="submit">Register</button>
+        <a class="link" href="login.html">Already have registered? Login</a>
+        <div class="success" id="successMsg"></div>
+    </form>
+  </div>
+</div>
+
+    
+
+    <script>
+
+        
+function validateForm() {
+    let isValid = true;
+    document.querySelectorAll(".error").forEach(e => e.textContent = "");
+    document.getElementById("successMsg").textContent = "";
+    
+    // full name
+    const fullName = document.getElementById("fullname").value.trim();
+    if (fullName.length < 3) {
+        document.getElementById("fullNameError").textContent = "Full Name must be at least 3 characters.";
+        isValid = false;
+    }
+    if (/(.)\1\1/.test(fullName)) {
+        document.getElementById("fullNameError").textContent = "Full Name must not contain same character 3 times.";
+        isValid = false;
+    }
+    if (/\d/.test(fullName)) {
+        document.getElementById("fullNameError").textContent = "Full Name must not contain digits.";
+        isValid = false;
+    }
+
+    // email
+    const email = document.getElementById("email").value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format.";
+        isValid = false;
+    }
+
+    // password
+    const password = document.getElementById("password").value.trim();
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    if (!passwordRegex.test(password)) {
+        document.getElementById("passwordError").textContent = "Password must be at least 8 characters, with uppercase, lowercase and number.";
+        isValid = false;
+    }
+
+    // confirm password
+    const confirmpassword = document.getElementById("confirmpassword").value.trim();
+    if (confirmpassword !== password) {
+        document.getElementById("confirmPasswordError").textContent = "Passwords do not match.";
+        isValid = false;
+    }
+
+    // phone number
+    const phonenumber = document.getElementById("phonenumber").value.trim();
+    if (!/^\d{10}$/.test(phonenumber)) {
+        document.getElementById("phoneNumberError").textContent = "Phone number must be exactly 10 digits.";
+        isValid = false;
+    }
+
+    // gender
+    const gender = document.querySelector('input[name="gender"]:checked');
+    if (!gender) {
+        document.getElementById("genderError").textContent = "Please select gender.";
+        isValid = false;
+    }
+
+    // dob
+    const dobValue = document.getElementById("dob").value;
+    const dob = new Date(dobValue);
+    const today = new Date();
+    const age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    const d = today.getDate() - dob.getDate();
+    if (
+        isNaN(dob.getTime()) ||
+        age < 18 || 
+        (age === 18 && (m < 0 || (m === 0 && d < 0)))
+    ) {
+        document.getElementById("dobError").textContent = "You must be at least 18 years old.";
+        isValid = false;
+    }
+
+    // address
+    const address = document.getElementById("address").value.trim();
+    if (address.length < 10) {
+        document.getElementById("addressError").textContent = "Address must be at least 10 characters.";
+        isValid = false;
+    }
+
+    // city
+    const city = document.getElementById("city").value;
+    if (!city) {
+        document.getElementById("cityError").textContent = "Please select a city.";
+        isValid = false;
+    }
+
+    // skills
+    const skills = document.querySelectorAll('input[name="skills"]:checked');
+    if (skills.length < 1) {
+        document.getElementById("skillsError").textContent = "Select at least one skill.";
+        isValid = false;
+    }
+
+    //profile picture
+    const profilePicInput = document.getElementById("profilePic");
+  const file = profilePicInput.files[0];
+
+  if (!file) {
+    document.getElementById("profilePicError").textContent = "Please upload a profile picture.";
+    return false;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    const base64Image = e.target.result;
+
+    // terms
+    const termsChecked = document.getElementById("terms").checked;
+    if (!termsChecked) {
+        document.getElementById("termsError").textContent = "You must accept the terms.";
+        isValid = false;
+    }
+
+    // If any field is invalid, stop here
+    if (!isValid) return false;
+
+    // Check if user already exists
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const existingUser = users.find(u => u.email === email);
+    if (existingUser) {
+        document.getElementById("emailError").textContent = "Email is already registered.";
+        return false;
+    }
+
+    // Store user
+    const user = {
+        fullName,
+        email,
+        password,
+        phonenumber,
+        gender: gender.value,
+        dob: dobValue,
+        address,
+        city,
+        skills: Array.from(skills).map(s => s.value),
+        profilePic: base64Image
+    };
+
+    users.push(user);
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("user", JSON.stringify(user)); // Also save current session
+
+    document.getElementById("successMsg").textContent = "Registration successful! Redirecting to login...";
+    setTimeout(() => {
+        window.location.href = "login.html";
+    }, 1500);
+};
+    reader.readAsDataURL(file);
+    return false; // prevent form submission
+}
+</script>
+
+</body>
+</html>
