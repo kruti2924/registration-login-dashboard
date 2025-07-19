@@ -1,127 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>User Dashboard</title>
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f2f5f9;
-      overflow: hidden;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    .dashboard-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-    .dashboard-box {
-      background-color: #ffffff;
-      max-width: 600px;
-      width: 100%;
-      padding: 35px 40px;
-      border-radius: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-      box-sizing: border-box;
-    }
+      html,
+      body {
+        height: auto;
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f2f5f9;
+        overflow-x: hidden;
+      }
 
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 30px;
-    }
+      .dashboard-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 40px 15px;
+        min-height: 100vh;
+      }
 
-    .user-detail {
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 1rem;
-    }
+      .dashboard-box {
+        background-color: #ffffff;
+        max-width: 600px;
+        width: 100%;
+        padding: 35px 25px;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      }
 
-    .label {
-      font-weight: bold;
-      color: #333;
-      display: inline-block;
-      width: 140px;
-    }
+      h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+      }
 
-    .value {
-      color: #555;
-    }
+      .user-detail {
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1rem;
+      }
 
-    button {
-      display: block;
-      margin: 35px auto 0;
-      padding: 12px 28px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 6px;
-      background-color: #0072ff;
-      color: #fff;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
+      .label {
+        font-weight: bold;
+        color: #333;
+        display: inline-block;
+        width: 140px;
+      }
 
-    button:hover {
-      background-color: #005ecc;
-    }
-  </style>
-</head>
-<body>
+      .value {
+        color: #555;
+      }
 
-<div class="dashboard-wrapper">
-  <div class="dashboard-box">
-    <h2>Welcome, <span id="userName"></span>!</h2>
-    <img id="profilePicPreview" style="max-width: 120px; border-radius: 50%; display: block; margin: 0 auto 20px;" />
+      button {
+        display: block;
+        margin: 35px auto 0;
+        padding: 12px 28px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 6px;
+        background-color: #0072ff;
+        color: #fff;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
 
-    <div id="userDetails"></div>
-    <button onclick="logout()">Logout</button>
-  </div>
-</div>
+      button:hover {
+        background-color: #005ecc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-wrapper">
+      <div class="dashboard-box">
+        <h2>Welcome, <span id="userName"></span>!</h2>
+        <img
+          id="profilePicPreview"
+          style="
+            max-width: 120px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+          "
+        />
 
-<script>
-  const user = JSON.parse(localStorage.getItem("user"));
+        <div id="userDetails"></div>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
 
-  if (!user || !user.loginTime) {
-    alert("You are not logged in or session expired.");
-    window.location.href = "login.html";
-  }else {
-  const now = Date.now();
-  const sessionDuration = (now - user.loginTime) / (1000 * 60);
+    <script>
+      const user = JSON.parse(localStorage.getItem("user"));
 
-  if(sessionDuration > 5){
-    localStorage.removeItem("user");
-    alert("Session expired. Please login again.");
-    window.location.href = "login.html";
-  }
-  else{
-  document.getElementById("userName").textContent = user.fullName;
-  document.getElementById("profilePicPreview").src = user.profilePic;
+      if (!user || !user.loginTime) {
+        alert("You are not logged in or session expired.");
+        window.location.href = "login.html";
+      } else {
+        const now = Date.now();
+        const sessionDuration = (now - user.loginTime) / (1000 * 60);
 
-  const userDetailsDiv = document.getElementById("userDetails");
+        if (sessionDuration > 5) {
+          localStorage.removeItem("user");
+          alert("Session expired. Please login again.");
+          window.location.href = "login.html";
+        } else {
+          document.getElementById("userName").textContent = user.fullName;
+          document.getElementById("profilePicPreview").src = user.profilePic;
 
-  const userInfo = `
-    <div class="user-detail"><span class="label">Full Name:</span><span class="value">${user.fullName}</span></div>
-    <div class="user-detail"><span class="label">Email:</span><span class="value">${user.email}</span></div>
-    <div class="user-detail"><span class="label">Phone Number:</span><span class="value">${user.phonenumber}</span></div>
-    <div class="user-detail"><span class="label">Gender:</span><span class="value">${user.gender}</span></div>
-    <div class="user-detail"><span class="label">Date of Birth:</span><span class="value">${new Date(user.dob).toLocaleDateString()}</span></div>
-    <div class="user-detail"><span class="label">Address:</span><span class="value">${user.address}</span></div>
-    <div class="user-detail"><span class="label">City:</span><span class="value">${user.city}</span></div>
-    <div class="user-detail"><span class="label">Skills:</span><span class="value">${Array.isArray(user.skills) ? user.skills.join(', ') : user.skills}</span></div>
+          const userDetailsDiv = document.getElementById("userDetails");
+
+          const userInfo = `
+    <div class="user-detail"><span class="label">Full Name:</span><span class="value">${
+      user.fullName
+    }</span></div>
+    <div class="user-detail"><span class="label">Email:</span><span class="value">${
+      user.email
+    }</span></div>
+    <div class="user-detail"><span class="label">Phone Number:</span><span class="value">${
+      user.phonenumber
+    }</span></div>
+    <div class="user-detail"><span class="label">Gender:</span><span class="value">${
+      user.gender
+    }</span></div>
+    <div class="user-detail"><span class="label">Date of Birth:</span><span class="value">${new Date(
+      user.dob
+    ).toLocaleDateString()}</span></div>
+    <div class="user-detail"><span class="label">Address:</span><span class="value">${
+      user.address
+    }</span></div>
+    <div class="user-detail"><span class="label">City:</span><span class="value">${
+      user.city
+    }</span></div>
+    <div class="user-detail"><span class="label">Skills:</span><span class="value">${
+      Array.isArray(user.skills) ? user.skills.join(", ") : user.skills
+    }</span></div>
   `;
 
-  userDetailsDiv.innerHTML = userInfo;
-  }
-}
-  function logout() {
-    localStorage.removeItem("user");
-    window.location.href = "login.html";
-  }
-</script>
-
-</body>
+          userDetailsDiv.innerHTML = userInfo;
+        }
+      }
+      function logout() {
+        localStorage.removeItem("user");
+        window.location.href = "login.html";
+      }
+    </script>
+  </body>
 </html>
